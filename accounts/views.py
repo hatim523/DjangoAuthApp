@@ -80,13 +80,18 @@ class Register(View):
 
 
 class ProfilePage(View):
-    template_name = ""
+    template_name = "accounts/profile.html"
 
     def get(self, request):
         if not request.user.is_authenticated:
             return redirect("accounts:login")
 
-        return HttpResponse("NOOOO")
+        return render(request, self.template_name)
 
     def post(self):
         pass
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect("accounts:login")
