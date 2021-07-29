@@ -1,0 +1,9 @@
+<script>
+function validate_email(email) {
+    return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email);
+}
+
+function validate_password(password) {
+    return password.length >= 8;
+}
+</script>

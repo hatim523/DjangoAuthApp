@@ -1,0 +1,55 @@
+<script>
+
+function try_register() {
+    register_error("");
+
+    {#let first_name_element = document.getElementById("");#}
+    {#let last_name_element = document.getElementById("");#}
+    let email_element = document.getElementById("email_in");
+    let pass_element = document.getElementById("pass_in");
+    let confirm_pass_element = document.getElementById("confirm_pass_in");
+
+    if (!validate_email(email_element.value)) {
+        register_error("Invalid email address");
+        return;
+    }
+
+    if (!validate_password(pass_element.value)) {
+        register_error("Invalid Password. Password should atleast contain 8 characters.");
+        return;
+    }
+
+    if (pass_element.value !== confirm_pass_element.value) {
+        register_error("Passwords do not match.");
+        return;
+    }
+
+    let form = document.getElementById("register_form")
+    let formData = new FormData(form);
+
+    post_request(
+        "{% url 'accounts:register' %}",
+        formData,
+        (response) => {
+            window.location.href = response["url"];
+        },
+        (response) => {
+            register_error(response["msg"]);
+        }
+    )
+}
+
+function register_error(msg) {
+    let alert_div = document.getElementById("alert_div");
+
+    if (msg.length < 1) {
+        alert_div.style.display = "none";
+        return;
+    }
+
+    alert_div.style.display = "block";
+    alert_div.innerText = msg;
+}
+
+register_error("");
+</script>

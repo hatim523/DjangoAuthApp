@@ -1,0 +1,45 @@
+{% extends "utils/base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <form id="register_form">
+                <div class="mb-3">
+                <label for="fname" class="form-label">First Name</label>
+                <input type="text" class="form-control" name="fname" id="fname" aria-describedby="emailHelp">
+              </div>
+                <div class="mb-3">
+                <label for="lname" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lname" name="lname" aria-describedby="emailHelp">
+              </div>
+              <div class="mb-3">
+                <label for="email_in" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email_in" name="email" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+              </div>
+              <div class="mb-3">
+                <label for="pass_in" class="form-label">Password</label>
+                <input type="password" class="form-control" id="pass_in" name="password1">
+                  <div id="passHelp" class="form-text">Password should atleast contain 8 characters</div>
+              </div>
+                <div class="mb-3">
+                <label for="confirm_pass_in" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="confirm_pass_in" name="password2">
+              </div>
+                <div class="mb-3" >
+                    <div class="alert alert-danger" id="alert_div">
+                        Invalid
+                    </div>
+                </div>
+              <button type="button" class="btn btn-primary" onclick="try_register()">Register</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block custom_scripts %}
+    {% include "utils/validations.html" %}
+    {% include "accounts/scripts/register_script.html" %}
+{% endblock %}
