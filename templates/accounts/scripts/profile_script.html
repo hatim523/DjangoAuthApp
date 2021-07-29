@@ -1,0 +1,64 @@
+<script>
+
+function change_password() {
+    password_error("");
+    let old_password = document.getElementById("pass_in");
+    let pass1 = document.getElementById("pass1");
+    let pass2 = document.getElementById("pass2");
+
+    if (!validate_password(pass1.value)) {
+        password_error("Password should contain atleast 8 characters.");
+        return;
+    }
+
+    if (pass1.value !== pass2.value) {
+        password_error("Passwords do not match");
+        return;
+    }
+
+    let formData = new FormData()
+    formData.append("old_pass", old_password.value);
+    formData.append("pass1", pass1.value);
+    formData.append("pass2", pass2.value);
+
+    post_request(
+        "{% url 'accounts:change_password' %}",
+        formData,
+        (response) => {
+            success_toast("Password updated!");
+        },
+        (response) => {
+            password_error(response["msg"]);
+        }
+    )
+}
+
+function update_profile() {
+    profile_update_error("");
+}
+
+function password_error(msg) {
+    let alert_div = document.getElementById("password_alert_div");
+    if (msg.length < 1) {
+        alert_div.style.display = "none";
+        return;
+    }
+
+    alert_div.style.display = "block";
+    alert_div.innerText = msg;
+}
+
+function profile_update_error(msg) {
+    let alert_div = document.getElementById("profile_alert_div");
+    if (msg.length < 1) {
+        alert_div.style.display = "none";
+        return;
+    }
+
+    alert_div.style.display = "block";
+    alert_div.innerText = msg;
+}
+
+password_error("");
+profile_update_error("");
+</script>

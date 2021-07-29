@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 
-from accounts.helpers import check_duplicate_email
+from accounts.helpers import check_duplicate_email, update_password
 
 
 class Login(View):
@@ -86,10 +86,32 @@ class ProfilePage(View):
         if not request.user.is_authenticated:
             return redirect("accounts:login")
 
-        return render(request, self.template_name)
+        context = {
+            "user": request.user
+        }
+        return render(request, self.template_name, context)
 
     def post(self):
         pass
+
+
+def change_password(request):
+    try:
+        if not request.user.is_authenticated:
+            return JsonResponse({"status": False, "msg": "Please login to continue."})
+
+        old_password = request.POST["old_pass"]
+        pass1 = request.POST["pass1"]
+        pass2 = request.POST["pass2"]
+
+        status, details = update_password(request.user, pass1, pass2, old_password, check_prev_pass=True)
+        if not status:
+            return JsonResponse({"status": False, "msg": details})
+
+        return JsonResponse({"status": True})
+    except Exception as e:
+        return JsonResponse({"status": False, "msg": "Something went wrong while processing password change request. "
+                                                     "Please try again."})
 
 
 def logout(request):

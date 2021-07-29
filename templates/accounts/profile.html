@@ -8,32 +8,55 @@
             <form id="register_form">
                 <div class="mb-3">
                 <label for="fname" class="form-label">First Name</label>
-                <input type="text" class="form-control" name="fname" id="fname" aria-describedby="emailHelp">
+                <input type="text" class="form-control" name="fname" id="fname" aria-describedby="emailHelp"
+                       value="{{ user.first_name }}">
               </div>
                 <div class="mb-3">
                 <label for="lname" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="lname" name="lname" aria-describedby="emailHelp">
+                <input type="text" class="form-control" id="lname" name="lname"  value="{{ user.last_name }}"
+                       aria-describedby="emailHelp">
               </div>
               <div class="mb-3">
                 <label for="email_in" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email_in" name="email" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <input type="email" class="form-control" id="email_in" name="email" value="{{ user.email }}" readonly
+                       aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">Email address cannot be changed.</div>
               </div>
-              <div class="mb-3">
-                <label for="pass_in" class="form-label">Password</label>
-                <input type="password" class="form-control" id="pass_in" name="password1">
-                  <div id="passHelp" class="form-text">Password should atleast contain 8 characters</div>
-              </div>
-                <div class="mb-3">
-                <label for="confirm_pass_in" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" id="confirm_pass_in" name="password2">
-              </div>
+
                 <div class="mb-3" >
-                    <div class="alert alert-danger" id="alert_div">
-                        Invalid
+                    <div class="alert alert-danger" id="profile_alert_div">
+
                     </div>
                 </div>
-              <button type="button" class="btn btn-primary" onclick="try_register()">Register</button>
+
+                <div class="mb-3">
+                    <button class="btn btn-block btn-outline-success">Update Profile</button>
+                </div>
+            <fieldset>
+                <div class="mb-3">
+                <label for="pass_in" class="form-label">Old Password</label>
+                <input type="password" class="form-control" id="pass_in" name="old_password">
+              </div>
+                <div class="row">
+                    <div class="mb-3 col-6">
+                <label for="pass_in" class="form-label">Password</label>
+                <input type="password" class="form-control" id="pass1" name="password1">
+                  <div id="passHelp" class="form-text">Password should atleast contain 8 characters</div>
+              </div>
+                <div class="mb-3 col-6">
+                <label for="confirm_pass_in" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="pass2" name="password2">
+              </div>
+                </div>
+
+            </fieldset>
+
+                <div class="mb-3" >
+                    <div class="alert alert-danger" id="password_alert_div">
+
+                    </div>
+                </div>
+              <button type="button" class="btn btn-block btn-outline-primary" onclick="change_password()">Change Password</button>
             </form>
         </div>
     </div>
@@ -41,4 +64,5 @@
 
 {% block custom_scripts %}
     {% include "utils/validations.html" %}
+    {% include "accounts/scripts/profile_script.html" %}
 {% endblock %}
