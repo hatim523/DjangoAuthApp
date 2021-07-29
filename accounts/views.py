@@ -14,7 +14,7 @@ class Login(View):
 
     def get(self, request):
         if request.user.is_authenticated:
-            pass
+            return redirect("accounts:profile")
 
         return render(request, self.template_name)
 
@@ -91,8 +91,18 @@ class ProfilePage(View):
         }
         return render(request, self.template_name, context)
 
-    def post(self):
-        pass
+    def post(self, request):
+        try:
+            fname = request.POST["fname"]
+            lname = request.POST["lname"]
+
+            request.user.first_name = fname
+            request.user.last_name = lname
+            request.user.save()
+            return JsonResponse({"status": True})
+        except Exception as e:
+            return JsonResponse({"status": False, "msg": "Something went wrong while updating profile information. "
+                                                         "Please try again."})
 
 
 def change_password(request):

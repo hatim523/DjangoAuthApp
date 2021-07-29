@@ -35,6 +35,24 @@ function change_password() {
 
 function update_profile() {
     profile_update_error("");
+    let fname_element = document.getElementById("fname");
+    let lname_element = document.getElementById("lname");
+
+
+    let formData = new FormData();
+    formData.append("fname", fname_element.value);
+    formData.append("lname", lname_element.value);
+
+    post_request(
+        "{% url 'accounts:profile' %}",
+        formData,
+        (response) => {
+            success_toast("Profile Information updated!");
+        },
+        (response) => {
+            profile_update_error(response["msg"]);
+        }
+    )
 }
 
 function password_error(msg) {
