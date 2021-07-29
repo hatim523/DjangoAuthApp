@@ -1,0 +1,58 @@
+<script>
+function validate_email(email) {
+    return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email);
+}
+
+function validate_password(password) {
+    return password.length >= 8;
+}
+
+function try_login() {
+    error_msg("");
+    let email_element = document.getElementById("email_in");
+    let password_element = document.getElementById("pass_in");
+    let login_button = document.getElementById("login_button");
+
+    if (!validate_email(email_element.value)) {
+        error_msg("Invalid email address");
+        return;
+    }
+
+    if (!validate_password(password_element.value)) {
+        error_msg("Invalid password");
+        return;
+    }
+
+    login_button.innerHTML = `<i class="fa fa-spinner fa-spin></i> Validating"`;
+    let formData = new FormData();
+    formData.append("email", email_element.value);
+    formData.append("password", password_element.value);
+
+    post_request(
+        "{% url 'accounts:login' %}",
+        formData,
+        (response) => {
+            login_button.innerHTML = `<i class="fa fa-spinner fa-spin></i> Redirecting"`;
+            window.location.href = response["url"];
+        },
+        (response) => {
+            login_button.innerHTML = "Login";
+            error_msg(response["msg"]);
+        }
+    )
+}
+
+function error_msg(msg) {
+    let error_div = document.getElementById("alert_div");
+
+    if (msg.length < 1) {
+        error_div.style.display = "none";
+        return;
+    }
+
+    error_div.style.display = "block";
+    error_div.innerText = msg;
+}
+
+error_msg("");
+</script>

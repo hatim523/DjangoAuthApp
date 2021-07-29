@@ -1,0 +1,32 @@
+{% extends "utils/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div class="row" style="padding: 2rem">
+        <div class="col-12">
+            <form>
+              <div class="mb-3">
+                <label for="email_in" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email_in" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+              </div>
+              <div class="mb-3">
+                <label for="pass_in" class="form-label">Password</label>
+                <input type="password" class="form-control" id="pass_in">
+              </div>
+                <div class="mb-3" >
+                    <div class="alert alert-danger" id="alert_div">
+                        Invalid
+                    </div>
+                </div>
+              <button type="button" onclick="try_login()" class="btn btn-primary" id="login_button">Login</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block custom_scripts %}
+    {% include "accounts/scripts/login_script.html" %}
+{% endblock %}
+
