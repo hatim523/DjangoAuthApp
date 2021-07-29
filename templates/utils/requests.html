@@ -1,0 +1,76 @@
+<script>
+let reqHeader = new Headers();
+reqHeader.append('X-CSRFToken', "{{ csrf_token }}");
+
+function post_request(url, body, success_callback, error_callback) {
+    `
+        Description: Sends a POST Ajax call to server
+        Callback Requirements: Should accept data (json)
+    `
+
+    let initObject = {
+        method: 'POST',
+        headers: reqHeader,
+        body: body
+    };
+
+    let userRequest = new Request(url, initObject);
+    request_helper(userRequest, success_callback, error_callback);
+}
+
+function get_request(url, body, success_callback, error_callback) {
+    `
+        Description: Sends a GET Ajax call to server
+        Callback Requirements: Should accept data (json)
+    `
+    let initObject = {
+        method: 'GET',
+        headers: reqHeader,
+        body: body
+    };
+
+    let userRequest = new Request(url, initObject);
+    request_helper(userRequest, success_callback, error_callback);
+}
+
+function post_with_file(url, body, success_callback, error_callback) {
+    `
+        Description: Sends a POST Ajax call to server with file data (headers changed)
+        Callback Requirements: Should accept data (json)
+    `
+    let reqHeaders = new Headers();
+    reqHeaders.append('X-CSRFToken', "{{ csrf_token }}");
+    reqHeaders.append("Content-Type", 'multipart/form-data');    // to send files to server
+
+    let initObject = {
+        method: 'POST',
+        headers: reqHeaders,
+        body: body
+    };
+
+    let userRequest = new Request(url, initObject);
+    request_helper(userRequest, success_callback, error_callback);
+}
+
+function request_helper(userRequest, successCallback, errorCallback) {
+    fetch(userRequest)
+        .then((response) => {
+            console.log("Request success");
+            let resp_data = response.json();
+
+            resp_data
+                .then((resp) => {
+                    resp['status'] === true ? successCallback(resp) : errorCallback(resp);
+                })
+                .catch((err) => {
+                    error_toast("Request Failed");
+                    console.log(err);
+                })
+
+        })
+        .catch((err) => {
+            error_toast("Request Failed");
+            console.log(err);
+        })
+}
+</script>

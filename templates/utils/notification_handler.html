@@ -1,0 +1,125 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+
+function warning_alert(title, message) {
+    Swal.fire({
+        icon: 'warning',
+        title: title,
+        text: message
+    });
+}
+function success_alert(title, message) {
+    Swal.fire({
+        icon: 'success',
+        title: title,
+        text: message
+    });
+}
+function info_alert(title, message) {
+    Swal.fire({
+        icon: 'info',
+        title: title,
+        text: message
+    });
+}
+function error_alert(title, message) {
+    Swal.fire({
+        icon: 'error',
+        title: title,
+        text: message
+    });
+}
+// functions same as above, only difference that text is not escaped and rendered as it is in html
+function warning_alert_html(title, message) {
+    Swal.fire({
+        icon: 'warning',
+        title: title,
+        html: message
+    });
+}
+function success_alert_html(title, message) {
+    Swal.fire({
+        icon: 'success',
+        title: title,
+        html: message
+    });
+}
+function info_alert_html(title, message) {
+    Swal.fire({
+        icon: 'info',
+        title: title,
+        html: message
+    });
+}
+function error_alert_html(title, message) {
+    Swal.fire({
+        icon: 'error',
+        title: title,
+        html: message
+    });
+}
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+});
+
+const Notification_Toast = Swal.mixin({
+  toast: true,
+  position: 'bottom-end',
+  showConfirmButton: false,
+  timer: 3000,
+  {#timerProgressBar: true,#}
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+});
+
+function warning_toast(title) {
+    Toast.fire({
+      icon: 'warning',
+      title: title
+    });
+}
+function info_toast(title) {
+    Toast.fire({
+      icon: 'info',
+      title: title
+    });
+}
+function success_toast(title) {
+    Toast.fire({
+      icon: 'success',
+      title: title
+    });
+}
+function error_toast(title) {
+    Toast.fire({
+      icon: 'error',
+      title: title
+    });
+}
+function bottom_notification_toast(title, text) {
+    Notification_Toast.fire({
+        icon: 'info',
+        title: title,
+        text: text
+    });
+}
+
+function bottom_warning_toast(title, text) {
+    Notification_Toast.fire({
+        icon: 'warning',
+        title: title,
+        text: text
+    });
+}
+</script>
